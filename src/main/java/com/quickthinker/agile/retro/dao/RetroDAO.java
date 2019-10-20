@@ -35,6 +35,7 @@ public class RetroDAO {
 		Retro retroCreated=null;
 		retro.setCreatedAt(LocalDate.now());
 		retro.setUpdatedAt(LocalDate.now());
+		retro.setCreatedBy("GUEST");
 		try{
 			retro.setUuid(UUID.randomUUID().toString());
 			retroCreated = retroRepository.save(retro);
