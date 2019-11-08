@@ -3,10 +3,44 @@
 <head>
 </head>
 <body>
-	<div th:fragment="header">
-		<header>
-			This is header
-		</header>
+	<div th:fragment="header_logo">
+		<div class="py-2 text-center">
+			<img class="d-block mx-auto mb-4"
+				th:src="@{'/images/quick_thinker_logo_no_title.jpg'}" alt=""
+				width="72" height="72">
+		</div>
+	</div>
+	<div  th:fragment="header_top" style="margin-bottom:10px;">
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+			<a class="navbar-brand" href="#">
+				<span th:text="${retroName}"></span>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarTogglerDemo02"
+				aria-controls="navbarTogglerDemo02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+				<div class="navbar-nav mr-auto mt-2 mt-lg-0">
+					
+				</div>
+				<form class="form-inline my-2 my-lg-0">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item active"><a class="nav-link fa fa-home" th:href="@{/}"> Home
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link fa fa-file-excel-o" href="#"> Export</a></li>
+					<li class="nav-item"><a class="nav-link fa fa-info-circle" href="#"> Help</a>
+					</li>
+				</ul>
+					<input id="search" class="form-control mr-sm-2" type="search"
+						placeholder="Search">
+					
+				</form>
+			</div>
+		</nav>
 	</div>
 </body>
-</html>	
+</html>

@@ -55,7 +55,8 @@ public class SectionDAO {
 		for(Map<String, Integer> indexMap:indexList){
 			Section section= new Section();
 			if(body.containsKey("sectionname"+ indexMap.get("sectionIndex"))){
-				String style=indexMap.get("sizeIndex").equals(3) ? "oneThird " :"half ";
+				String style="";
+				//String style=indexMap.get("sizeIndex").equals(3) ? "oneThird " :"half ";
 				style += getColorStyle(indexMap.get("sectionIndex"));
 				section.setName(body.get("sectionname"+ indexMap.get("sectionIndex")));
 				section.setRetroId(retroId);

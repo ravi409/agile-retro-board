@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quickthinker.agile.retro.dao.RetroDAO;
 import com.quickthinker.agile.retro.dao.SectionDAO;
@@ -29,6 +33,28 @@ public class HomeController {
 	public String homePage(Model model){
 		model.addAttribute("retros",retroDAO.findByCreatedBy("GUEST"));
 		return "index";
+	}
+	
+	@RequestMapping(value="/", method = RequestMethod.POST,consumes= MediaType.APPLICATION_FORM_URLENCODED_VALUE,  produces= MediaType.APPLICATION_JSON_VALUE)
+	public String saveRetroBoard( @RequestParam Map<String,String> body){
+		long numberOfSections = 0;
+		Retro retroCreated = null;
+		Retro retro = new Retro();
+		if(body.containsKey("name")){
+			retro.setName(body.get("name"));
+		}
+		if(body.containsKey("description")){
+			retro.setDescr(body.get("description"));
+		}
+		if(body.containsKey("numberOfSections")){
+			numberOfSections = Long.parseLong(body.get("numberOfSections"));
+			retro.setNumOfSections(numberOfSections);
+		}
+		retroCreated = retroDAO.save(retro);
+		if(retroCreated.getId() !=null){
+			sectionDAO.addSections(body, retroCreated.getId(), (int)numberOfSections);	
+		}
+		return "redirect:/" + retroCreated.getUuid();
 	}
 	
 	@GetMapping("/{uuid}")

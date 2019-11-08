@@ -1,199 +1,182 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE HTML>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{fragments/main_layout}">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/home.css}" />
 
-  <link rel="stylesheet" th:href="@{/css/form-validation.css}" />
-
-  <title>Hello, world!</title>
 </head>
-
 <body>
+	<div layout:fragment="content">
+		<div th:replace="fragments/header :: header_logo"></div>
+		<div class="row">
 
-  <div class="container">
-    <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4"
-        th:src="@{'/images/quick_thinker_logo_no_title.jpg'}" alt="" width="72"
-        height="72">
-     </div>
+			<div class="col-md-4 order-md-2 mb-4">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-muted">My Boards</span> <span
+						class="badge badge-secondary badge-pill"
+						th:text="${retros.size()}"></span>
+				</h4>
+				<ul class="list-group mb-3">
+					<li
+						class="list-group-item d-flex justify-content-between lh-condensed"
+						th:each="retro: ${retros}">
+						<div>
+							<h6 class="my-0" th:text="${retro.name}"></h6>
+							<small class="text-muted" th:text="${retro.descr}"></small>
+						</div> <a th:href="@{'/' + ${retro.uuid}}" class="fa fa-external-link">
 
-    <div class="row">
-      <div class="col-md-4 order-md-2 mb-4">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-muted">My Boards</span>
-          <span class="badge badge-secondary badge-pill" th:text="${retros.size()}"></span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-condensed" th:each="retro: ${retros}">
-            <div>
-              <h6 class="my-0" th:text="${retro.name}"></h6>
-              <small class="text-muted" th:text="${retro.descr}"></small>
-            </div>
-            <a th:href="@{'/' + ${retro.uuid}}" class="fa fa-external-link">
+					</a>
+					</li>
+				</ul>
 
-            </a>
-          </li>
-        </ul>
-
-
-      </div>
-      <div class="col-md-8 order-md-1">
-        <h4 class="mb-3">New Board</h4>
-        <form class="needs-validation" th:action="@{'/retros'}" accept-charset="UTF-8" method="POST" novalidate>
-          <div class="mb-3">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" maxlength="100" placeholder="" value=""
-              required>
-            <div class="invalid-feedback">
-              Valid name is required.
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="description">Description</label>
-            <input type="text" class="form-control" id="description" name="description" maxlength="100" placeholder=""
-              value="" required>
-            <div class="invalid-feedback">
-              Valid description is required.
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="numberOfSections">Format</label>
-            <select class="custom-select d-block w-100" id="numberOfSections" name="numberOfSections" required>
-              <option value="3">Retrospective</option>
-              <option value="6">Star Fish Retrospective</option>
-              <option value="6">Six Thinking Hats</option>
-              <option value="1">Todos</option>
-              <option value="2">Pros and Cons</option>
-              <option value="1">1 Section</option>
-              <option value="2">2 Sections</option>
-              <option value="3">3 Sections</option>
-              <option value="4">4 Sections</option>
-              <option value="5">5 Sections</option>
-              <option value="6">6 Sections</option>
-              <option value="7">7 Sections</option>
-              <option value="8">8 Sections</option>
-              <option value="9">9 Sections</option>
-              <option value="10">10 Sections</option>
-            </select>
-            <div class="invalid-feedback">
-              Please select a valid format.
-            </div>
-          </div>
-          <div class="mb-3" id="sectionWrapper">
-            <label for="sectionTitle">Section Title</label>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname0" id="sectionname0" maxlength="100" value=""
-                required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname1" id="sectionname1" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname2" id="sectionname2" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname3" id="sectionname3" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname4" id="sectionname4" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname5" id="sectionname5" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname6" id="sectionname6" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname7" id="sectionname7" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname8" id="sectionname8" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="sectionname9" id="sectionname9" maxlength="100"
-                style="display: none;" disabled="disabled" value="" required>
-              <div class="invalid-feedback">
-                Valid section name is required.
-              </div>
-            </div>
-
-          </div>
-
-          <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Create Retrospective Board</button>
-        </form>
-      </div>
-    </div>
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-      <p class="mb-1">&copy; 2017-{{ site.time | date: "%Y" }} Company Name</p>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Privacy</a></li>
-        <li class="list-inline-item"><a href="#">Terms</a></li>
-        <li class="list-inline-item"><a href="#">Support</a></li>
-      </ul>
-    </footer>
-  </div>
-
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+				<div class="d-none d-sm-none d-md-block" >
+					<div class="LI-profile-badge" data-version="v1" data-size="medium"
+						data-locale="en_US" data-type="horizontal" data-theme="light"
+						data-vanity="ravikumar-ch">
+						<a class="LI-simple-link"
+							href='https://www.linkedin.com/in/ravikumar-ch?trk=profile-badge'>Ravikumar
+							C.</a>
+					</div>
+				</div>
 
 
-  <script type="text/javascript" th:src="@{/js/form-validation.js}"></script>
-  <script type="text/javascript" th:src="@{/js/retros.js}"></script>
+			</div>
 
+
+			<div class="col-md-8 order-md-1">
+				<h4 class="mb-3">New Board</h4>
+				<form class="needs-validation" th:action="@{'/'}"
+					accept-charset="UTF-8" method="POST" novalidate>
+					<div class="mb-3">
+						<label for="name">Name</label> <input type="text"
+							class="form-control" id="name" name="name" maxlength="100"
+							placeholder="" value="" required>
+						<div class="invalid-feedback">Valid name is required.</div>
+					</div>
+					<div class="mb-3">
+						<label for="description">Description</label> <input type="text"
+							class="form-control" id="description" name="description"
+							maxlength="100" placeholder="" value="" required>
+						<div class="invalid-feedback">Valid description is required.
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="numberOfSections">Format</label> <select
+							class="custom-select d-block w-100" id="numberOfSections"
+							name="numberOfSections" required>
+							<option value="3">Retrospective</option>
+							<option value="6">Star Fish Retrospective</option>
+							<option value="6">Six Thinking Hats</option>
+							<option value="1">Todos</option>
+							<option value="2">Pros and Cons</option>
+							<option value="1">1 Section</option>
+							<option value="2">2 Sections</option>
+							<option value="3">3 Sections</option>
+							<option value="4">4 Sections</option>
+							<option value="5">5 Sections</option>
+							<option value="6">6 Sections</option>
+							<option value="7">7 Sections</option>
+							<option value="8">8 Sections</option>
+							<option value="9">9 Sections</option>
+							<option value="10">10 Sections</option>
+						</select>
+						<div class="invalid-feedback">Please select a valid format.</div>
+					</div>
+					<div class="mb-3" id="sectionWrapper">
+						<label for="sectionTitle">Section Title</label>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname0"
+								id="sectionname0" maxlength="100" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname1"
+								id="sectionname1" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname2"
+								id="sectionname2" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname3"
+								id="sectionname3" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname4"
+								id="sectionname4" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname5"
+								id="sectionname5" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname6"
+								id="sectionname6" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname7"
+								id="sectionname7" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname8"
+								id="sectionname8" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control" name="sectionname9"
+								id="sectionname9" maxlength="100" style="display: none;"
+								disabled="disabled" value="" required>
+							<div class="invalid-feedback">Valid section name is
+								required.</div>
+						</div>
+
+					</div>
+
+					<hr class="mb-4">
+					<button class="btn btn-primary btn-lg btn-block" type="submit">Create
+						Retrospective Board</button>
+				</form>
+			</div>
+
+			<div class="d-md-none d-lg-none  order-md-3 " style="margin: 20px;">
+				<div class="LI-profile-badge" data-version="v1" data-size="medium"
+					data-locale="en_US" data-type="horizontal" data-theme="light"
+					data-vanity="ravikumar-ch">
+					<a class="LI-simple-link"
+						href='https://www.linkedin.com/in/ravikumar-ch?trk=profile-badge'>Ravikumar
+						C.</a>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" th:src="@{/js/form-validation.js}"></script>
+		<script type="text/javascript" th:src="@{/js/retros.js}"></script>
+	</div>
 </body>
 
 </html>

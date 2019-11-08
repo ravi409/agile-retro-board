@@ -1,39 +1,53 @@
-<!DOCTYPE html>
-<html xmlns:layout="http://www.w3.org/1999/xhtml"
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
 <meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Agile Retro Board</title>
-<meta name="description" content="">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<link id="favico" rel="Shortcut Icon" type="image/x-icon"
+	th:href="@{/images/quick_thinker_logo_no_title.jpg}">
 
 <link rel="stylesheet"
-	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script type="text/javascript"
+	th:src="@{../webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script type="text/javascript"
+	src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 <script>
 		$.ajaxPrefilter(function(options){
 			options.url = options.url + '?rnd=' +new Date().getTime();
 		});
 	</script>
+
+<style>
+body {
+	background-image: url('/images/background-blur-clean-clear.jpg');
+}
+</style>
 </head>
 <body>
-	<div class="content">
-		<div th:replace="fragments/header :: header"></div>
-		<div class="container" style="height: 5px; background-color: green;"></div>
-		<div class="container page-body">
-			<div class="page-content">
-				<div layout:fragment="content"></div>
-			</div>
-		</div>
 
+	<div class="container">
+		<div class="container">
+			<div layout:fragment="content"></div>
+		</div>
 		<div th:replace="fragments/footer :: footer"></div>
+
+
+
 	</div>
+
+
 </body>
+
 </html>

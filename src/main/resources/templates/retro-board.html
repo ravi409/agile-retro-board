@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{fragments/main_layout}">
+<head>
+<link rel="stylesheet"
+	th:href="@{../webjars/jquery-ui/1.12.1/jquery-ui.min.css}" />
+<link rel="stylesheet" th:href="@{/css/board.css}" />
+<script type="text/javascript"
+	th:src="@{../webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{../webjars/underscorejs/1.9.0/underscore-min.js}"></script>
+<script type="text/javascript" th:src="@{/js/board.js}"></script>
+
+
+<meta th:content="${retroId}" name="retroId">
+<meta th:content="${retroName}" name="retroName">
+
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div th:replace="fragments/header :: header_top"></div>
+		<div class="row">
+			<div class="whiteboard">
+				<div class="sections" th:each="sectionRow : ${sectionRows}"
+					th:id="${sectionRow.sectionRowId}">
+					<div class="section  ui-droppable col-md-4"
+						th:each="section : ${sectionRow.sections}"
+						th:data-color="${section.style}"
+						th:classappend="'order-md-'+ ${section.id} +' ' + ${section.style}"
+						th:id="'section'+ ${section.id}">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="sectionTitle" th:text="${section.name}"></h4>
+								<button class="btn addStickyButton fa fa-plus-circle"
+									title="Add Sticky"></button>
+							</div>
+							<div class="card-body">
+								<div class="points"></div>
+
+								<div class="addStickyForm hide">
+									<textarea class="stickyText" cols="30" maxlength="140" rows="4"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+				<div class="hide">
+					<div class="col_right" id="stickyTemplate">
+						<div class="sticky">
+							<div class="stickyText"></div>
+							<div class="voteCount">
+								+ <span class="count">0</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div th:replace="fragments/header :: header_logo"></div>
+
+
+		<div
+			class="ui-dialog ui-widget ui-widget-content ui-corner-all orange"
+			tabindex="-1" role="dialog"
+			aria-labelledby="ui-dialog-title-largeStickyDialog"
+			style="display: none; z-index: 1002; outline: 0px; height: auto;">
+
+			<div id="largeStickyDialog"
+				class="ui-dialog-content ui-widget-content" scrolltop="0"
+				scrollleft="0"
+				style="width: auto; min-height: 0px; height: 210.8px;">
+				<div class="stickyLarge">
+					<div class="stickyTextContainer">
+						<label for="stickyText"> <span class="fa fa-pencil"></span>
+						</label>
+						<textarea class="stickyText formElement" cols="35" id="stickyText"
+							rows="4" title="click to edit"></textarea>
+						<span class="stickyUpdated">Updated</span>
+					</div>
+					<div class="stickyActions">
+						<div class="stickyVote">
+							<a class="voteStickyButton fa fa-thumbs-up" title="Vote Up"></a>
+							<span class="voteCountContainer"> + <span class="count">0</span>
+							</span> <span class="voteUpdated"></span>
+						</div>
+						<a class="removeStickyButton fa fa-trash" title="Delete sticky"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

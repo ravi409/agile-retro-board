@@ -21,9 +21,6 @@ $(document).ready(function() {
             })
         }
     };
-    $.each(e, function(e, t) {
-        $("#numberOfSections").prepend($("<option></option>").attr("value", t.length).text(e))
-    }),
     $("#numberOfSections").change(t).change();
    
 });

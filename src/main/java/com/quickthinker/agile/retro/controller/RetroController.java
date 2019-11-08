@@ -35,27 +35,7 @@ public class RetroController {
 		return "Hello World";
 	}
 	
-	@RequestMapping(value="/retros", method = RequestMethod.POST,consumes= MediaType.APPLICATION_FORM_URLENCODED_VALUE,  produces= MediaType.APPLICATION_JSON_VALUE)
-	public String saveRetroBoard(@RequestParam Map<String,String> body){
-		long numberOfSections = 0;
-		Retro retroCreated = null;
-		Retro retro = new Retro();
-		if(body.containsKey("name")){
-			retro.setName(body.get("name"));
-		}
-		if(body.containsKey("description")){
-			retro.setDescr(body.get("description"));
-		}
-		if(body.containsKey("numberOfSections")){
-			numberOfSections = Long.parseLong(body.get("numberOfSections"));
-			retro.setNumOfSections(numberOfSections);
-		}
-		retroCreated = retroDAO.save(retro);
-		if(retroCreated.getId() !=null){
-			sectionDAO.addSections(body, retroCreated.getId(), (int)numberOfSections);	
-		}
-		return "redirect:/" + retroCreated.getUuid();
-	}
+	
 	
 	@RequestMapping(value="/retros", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public List<Retro> getAllRetros(){
@@ -103,7 +83,7 @@ public class RetroController {
 		return result;
 	}
 	
-	@RequestMapping(value="/points}", method = RequestMethod.POST,consumes= MediaType.APPLICATION_FORM_URLENCODED_VALUE,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/points", method = RequestMethod.POST,consumes= MediaType.APPLICATION_FORM_URLENCODED_VALUE,  produces= MediaType.APPLICATION_JSON_VALUE)
 	public Object savePoint(@RequestParam Map<String,String> body){
 		Point point =new Point();
 		point.setSection_id(Long.parseLong(body.get("point[section_id]")));
@@ -111,12 +91,12 @@ public class RetroController {
 		return pointDAO.save(point);
 	}
 	
-	@RequestMapping(value="/points/{id}/votes}", method = RequestMethod.POST,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/points/{id}/votes", method = RequestMethod.POST,  produces= MediaType.APPLICATION_JSON_VALUE)
 	public int addVote(@PathVariable("id") long id){
 		return pointDAO.addVote(id);
 	}
 	
-	@RequestMapping(value="/points/delete/{id}}", method = RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/points/delete/{id}", method = RequestMethod.GET,  produces= MediaType.APPLICATION_JSON_VALUE)
 	public int deletePoint(@PathVariable("id") long id,@RequestParam("message") String message){
 		return pointDAO.addVote(id);
 	}
